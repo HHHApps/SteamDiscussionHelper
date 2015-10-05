@@ -1,5 +1,6 @@
 /* Regex-patterns to check URLs against. It matches URLs like: http[s]://[...]imgur.com[...] */
 var baseURLRegex = /^https?:\/\/(?:[^\.]+\.)?imgur\.com/;
+var accountURLRegex = /^https?:\/\/(?:[^\.]+\.)?imgur\.com\/account\/?/;
 var galleryURLRegex = /^https?:\/\/(?:[^\.]+\.)?imgur\.com\/gallery\/?/;
 
 function addJavascriptLibraries(tabId){
@@ -34,8 +35,9 @@ function queryTabs(){
 			if (galleryURLRegex.test(tab.url)) {
 				/* The URL is for a gallery post. */
 				updatePost(tab.id);
-			} else {
-				/* The URL is for a gallery list. */
+			} else if(!accountURLRegex.test(tab.url)){
+				/* This account URL check is to prevent unwanted events like marking 
+					gallery favorites. We only want URL's for gallery lists. */
 				updateGallery(tab.id);
 			}
 		});
