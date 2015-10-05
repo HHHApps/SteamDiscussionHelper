@@ -11,13 +11,13 @@ $( document ).ready(function() {
 		markPostAsSeent(seentPosts);
 		
 		var postIds = _.map(posts, function(elem){
-			return elem.pathname.substr(1);
+			return elem.pathname.substr(elem.pathname.lastIndexOf("/") + 1);
 		});
 		
 		var idsToTag = _.intersection(seentPosts, postIds);
 		
 		var postsToTag = _.filter(posts, function(post){
-			return _.contains(idsToTag, post.pathname.substr(1));
+			return _.contains(idsToTag, post.pathname.substr(post.pathname.lastIndexOf("/") + 1));
 		});
 		
 		_.each(postsToTag, function(elem){

@@ -7,14 +7,19 @@ function addJavascriptLibraries(tabId){
 	chrome.tabs.executeScript(tabId, { file: "/lib/underscore-min.js" });
 }
 
+function addCSS(tabId){
+	chrome.tabs.insertCSS(tabId, { file: "/styles/seentIt.css" });
+}
+
 function updateGallery(tabId){
 	addJavascriptLibraries(tabId);
-	chrome.tabs.insertCSS(tabId, { file: "/styles/seentIt.css" });
+	addCSS(tabId);
 	chrome.tabs.executeScript(tabId, { file: "updateGallery.js" });
 }
 
 function updatePost(tabId){
 	addJavascriptLibraries(tabId);
+	addCSS(tabId);
 	chrome.tabs.executeScript(tabId, { file: "updatePost.js" });
 }
 
@@ -67,7 +72,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
 		baseURLRegex.test(details.url)) {
 		
 		var galleryId = details.url.substr(details.url.lastIndexOf("/") + 1);
-		//markAsSeent(galleryId);
+		markAsSeent(galleryId);
 		updatePost(details.tabId);
 	}
-})
+});
