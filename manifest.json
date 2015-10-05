@@ -3,7 +3,7 @@
 
   "name": "Imgur - Seent It",
   "description": "This extension adds a 'Seent It' icon to previously viewed Imgur gallery posts.",
-  "version": "1.1",
+  "version": "1.2",
   "background":{
 	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "seentIt.js"]
   },
