@@ -5,7 +5,7 @@
   "description": "This extension clicks the Next In Queue button for the Steam Winter 2015 Sale.",
   "version": "1.0",
   "background":{
-	"scripts": ["/lib/jquery-1.11.3.min.js", "nextInQueue.js"]
+	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "nextInQueue.js"]
   },
   "content_scripts": [{
   	"matches": ["*://*.store.steampowered.com/app/*"],
