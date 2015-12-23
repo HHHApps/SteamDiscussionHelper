@@ -8,7 +8,7 @@
 	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "nextInQueue.js"]
   },
   "content_scripts": [{
-  	"matches": ["*://*.store.steampowered.com/app/*"],
+  	"matches": ["*://*.store.steampowered.com/*"],
   	"js":      ["loadSteamNextInQueue.js"]
   }],
   "permissions": [
