@@ -1,28 +1,18 @@
 {
   "manifest_version": 2,
 
-  "name": "Imgur - Seent It",
-  "description": "This extension adds a 'Seent It' icon to previously viewed Imgur gallery posts.",
-  "version": "1.2",
+  "name": "Steam Winter Sale 2015 Next In Queue Clicker",
+  "description": "This extension clicks the Next In Queue button for the Steam Winter 2015 Sale.",
+  "version": "1.0",
   "background":{
-	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "seentIt.js"]
+	"scripts": ["/lib/jquery-1.11.3.min.js", "nextInQueue.js"]
   },
-  "icons": {
-	"16": "images/icon16.png",
-	"48": "images/icon48.png",
-	"128": "images/icon128.png"
-  },
-  "web_accessible_resources": [
-    "images/seent.png"
-  ],
   "content_scripts": [{
-  	"matches": ["*://*.imgur.com/*"],
-  	"js":      ["loadSeentIt.js"]
+  	"matches": ["*://*.store.steampowered.com/app/*"],
+  	"js":      ["loadSteamNextInQueue.js"]
   }],
   "permissions": [
     "<all_urls>",
-	"webNavigation",
-	"tabs",
-	"storage"
+	"tabs"
   ]
 }
