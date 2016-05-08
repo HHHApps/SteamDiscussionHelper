@@ -1,15 +1,15 @@
 {
   "manifest_version": 2,
 
-  "name": "Steam Winter Sale 2015 Next In Queue Clicker",
-  "description": "This extension clicks the Next In Queue button for the Steam Winter 2015 Sale.",
-  "version": "1.2",
+  "name": "Steam Discussion Helper",
+  "description": "Adds new functionality to assist in posting in Steam Discussions.",
+  "version": "1.0",
   "background":{
-	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "nextInQueue.js"]
+	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "steamDiscussionHelper.js"]
   },
   "content_scripts": [{
-  	"matches": ["*://*.store.steampowered.com/*"],
-  	"js":      ["loadSteamNextInQueue.js"]
+  	"matches": ["*://*.steamcommunity.com/*"],
+  	"js":      ["loadSteamDiscussionHelper.js"]
   }],
   "permissions": [
     "<all_urls>",
