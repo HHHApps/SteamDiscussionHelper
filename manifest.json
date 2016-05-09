@@ -3,7 +3,7 @@
 
   "name": "Steam Discussion Helper",
   "description": "Adds new functionality to assist in posting in Steam Discussions.",
-  "version": "1.0",
+  "version": "1.1",
   "background":{
 	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "steamDiscussionHelper.js"]
   },
