@@ -28,7 +28,8 @@ var keycodes = {
 $( document ).ready(function() {
 	removeExistingButtons();
 	
-	var newDiscussionButton = $('.responsive_OnClickDismissMenu');
+	//Doesn't add the buttons if you can't post to the discussions.
+	var newDiscussionButton = $('body').find('span:contains("Start a New Discussion")');
 	
 	if(newDiscussionButton.length > 0){
 		appendToReplyArea();

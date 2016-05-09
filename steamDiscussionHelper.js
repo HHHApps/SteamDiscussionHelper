@@ -1,8 +1,6 @@
 /* Regex to compare the url to. */
 var urlRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/?/;
 var appDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/app\/[0-9]+\/discussions\/?/;
-//var appDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/app\/[0-9]+\/discussions\/[0-9]+\/?/;
-//var groupDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/groups\/[a-zA-Z0-9]+\/discussions\/[0-9]+\/?/;
 var groupDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/groups\/[a-zA-Z0-9]+\/discussions/;
 
 /* Inject jQuery into the page just to make sure we have it,
