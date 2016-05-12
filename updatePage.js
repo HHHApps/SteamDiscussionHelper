@@ -86,6 +86,9 @@ $( document ).ready(function() {
 		$('#dh_codeButton').click(function(){
 			addCodeTag();
 		});
+		$('#dh_noParseButton').click(function(){
+			addNoParseTag();
+		});
 		$('#dh_sarcasmButton').click(function(){
 			addSarcasmTag();
 		});
@@ -126,6 +129,9 @@ $( document ).ready(function() {
 		$('#dh_sidebar_codeButton').click(function(){
 			addCodeTag();
 		});
+		$('#dh_sidebar_noParseButton').click(function(){
+			addNoParseTag();
+		});
 		$('#dh_sidebar_sarcasmButton').click(function(){
 			addSarcasmTag();
 		});
@@ -156,6 +162,7 @@ function appendToReplyArea(){
 					'<button type="button" class="dhBtn dhReplyBtn" id="dh_listButton">Bullet List</button>' + 
 					'<button type="button" class="dhBtn dhReplyBtn" id="dh_oListButton">Number List</button>' + 
 					'<button type="button" class="dhBtn dhReplyBtn" id="dh_codeButton">Code</button>' + 
+					'<button type="button" class="dhBtn dhReplyBtn" id="dh_noParseButton">No Parse</button>' + 
 					'<button type="button" class="dhBtn dhReplyBtn" id="dh_sarcasmButton">Sarcasm</button>' + 
 					'<button type="button" class="dhBtn dhReplyBtn" id="dh_offTopicButton">Off-Topic</button>' + 
 					'</div>');
@@ -176,6 +183,7 @@ function appendToSidebar(){
 					'<button type="button" class="dhBtn" id="dh_sidebar_listButton">Bullet List</button>' + 
 					'<button type="button" class="dhBtn" id="dh_sidebar_oListButton">Number List</button>' + 
 					'<button type="button" class="dhBtn" id="dh_sidebar_codeButton">Code</button>' + 
+					'<button type="button" class="dhBtn" id="dh_sidebar_noParseButton">No Parse</button>' + 
 					'<button type="button" class="dhBtn" id="dh_sidebar_sarcasmButton">Sarcasm</button>' + 
 					'<button type="button" class="dhBtn" id="dh_sidebar_offTopicButton">Off-Topic</button>' + 
 					'</div>');
@@ -223,6 +231,10 @@ function addOrderedListTag(){
 
 function addCodeTag(){
 	appendText("code");
+}
+
+function addNoParseTag(){
+	addTag("noparse");
 }
 
 function addSarcasmTag(){
