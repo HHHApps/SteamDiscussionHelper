@@ -3,6 +3,8 @@ var urlRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/?/;
 var appDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/app\/[0-9]+\/discussions\/?/;
 var groupDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/groups\/[a-zA-Z0-9]+\/discussions/;
 var regularDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/discussions/;
+var tradingDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/app\/[0-9]+\/tradingforum\//;
+var workshopDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/workshop\/discussions\/?/;
 
 /* Inject jQuery into the page just to make sure we have it,
 	then inject the updatePage script. */
@@ -19,8 +21,12 @@ function queryTabs(){
 	}, function(tabs) {
 		_.each(tabs, function(tab){
 			
-			if (appDiscussionRegex.test(tab.url) || groupDiscussionRegex.test(tab.url) || regularDiscussionRegex.test(tab.url)) {
-				updatePage(tab.id);
+			if (appDiscussionRegex.test(tab.url) || 
+				groupDiscussionRegex.test(tab.url) || 
+				regularDiscussionRegex.test(tab.url) || 
+				tradingDiscussionRegex.test(tab.url) || 
+				workshopDiscussionRegex.test(tab.url)) {
+					updatePage(tab.id);
 			}
 		});
 	});
