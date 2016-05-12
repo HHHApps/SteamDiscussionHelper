@@ -25,6 +25,8 @@ Number List 	-adds- 		[olist]
 							[/olist]
 					
 Quote 			-adds- 		[quote]selected text[/quote]
+
+No Parse 		-adds- 		[noparse]selected text[/noparse]
 				
 Code 			-adds- 		[code][/code]
 		
