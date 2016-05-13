@@ -9,7 +9,20 @@ String.prototype.replaceAt = function(index, characters, tag) {
 
 function getTextArea(){
 	//I want to give the textarea an id for quicker access later
-	$('textarea[class="forumtopic_reply_textarea"]:first-child').first().attr('id', 'dhTextArea');
+	var textArea;
+	
+	if($('.forumtopic_reply_entry').length > 0){
+		/* new reply */
+		var textArea = $('.forumtopic_reply_entry')[0].children[0].children[0];
+		textArea.id = "dhTextArea";
+	} else if($('textarea[class="forumtopic_reply_textarea"]:first-child').length > 0){
+		/* new post */
+		textArea = $('textarea[class="forumtopic_reply_textarea"]:first-child').first().attr('id', 'dhTextArea');
+	} else if ($('textarea[id="description"]').length > 0){
+		/* new guide */
+		textArea = $('textarea[id="description"]').attr('id', 'dhTextArea');
+	}
+	
 	return $('#dhTextArea');
 }
 
@@ -18,7 +31,11 @@ function getSidebar(){
 }
 
 function getReplyArea(){
-	return $('.forum_newtopic_header');
+	var replyArea = $('.forum_newtopic_header');
+	if(replyArea.length == 0){
+		replyArea = $('.workshopDescContainer')
+	}
+	return replyArea;
 }
 
 var keycodes = {
@@ -31,115 +48,128 @@ $( document ).ready(function() {
 	//Doesn't add the buttons if you can't post to the discussions.
 	var newDiscussionButton = $('body').find('span:contains("Start a New Discussion")');
 	
+	var newGuideSpan = $('body').find('span:contains("Creating a new guide")');
+	
 	if(newDiscussionButton.length > 0){
-		appendToReplyArea();
-		appendToSidebar();
-
-		var sidebarTop = $('#dhSidebarButtons').position().top;
-		
-		$(window).scroll(function(){
-			var windowTop = $(window).scrollTop();
-			
-			//if top of sidebar is in view
-			if (windowTop > sidebarTop)
-			{
-				//always in view
-				$('#dhSidebarButtons').css({ "position":"fixed", "top":"10px" });
-			}
-			else
-			{
-				//reset back to normal viewing
-				$('#dhSidebarButtons').css({ "position":"inherit" });
-			}
-		});
-		
-		$('#dh_urlButton').click(function(){
-			addUrlTag();
-		});
-		$('#dh_boldButton').click(function(){
-			addBoldTag();
-		});
-		$('#dh_italicButton').click(function(){
-			addItalicTag();
-		});
-		$('#dh_underlineButton').click(function(){
-			addUnderlineTag();
-		});
-		$('#dh_headerButton').click(function(){
-			addHeaderTag();
-		});
-		$('#dh_strikeButton').click(function(){
-			addStrikeTag();
-		});
-		$('#dh_spoilerButton').click(function(){
-			addSpoilerTag();
-		});
-		$('#dh_quoteButton').click(function(){
-			addQuoteTag();
-		});
-		$('#dh_listButton').click(function(){
-			addListTag();
-		});
-		$('#dh_oListButton').click(function(){
-			addOrderedListTag();
-		});
-		$('#dh_codeButton').click(function(){
-			addCodeTag();
-		});
-		$('#dh_noParseButton').click(function(){
-			addNoParseTag();
-		});
-		$('#dh_sarcasmButton').click(function(){
-			addSarcasmTag();
-		});
-		$('#dh_offTopicButton').click(function(){
-			addOffTopicTag();
-		});
-		
-		$('#dh_sidebar_urlButton').click(function(){
-			addUrlTag();
-		});
-		$('#dh_sidebar_boldButton').click(function(){
-			addBoldTag();
-		});
-		$('#dh_sidebar_italicButton').click(function(){
-			addItalicTag();
-		});
-		$('#dh_sidebar_underlineButton').click(function(){
-			addUnderlineTag();
-		});
-		$('#dh_sidebar_headerButton').click(function(){
-			addHeaderTag();
-		});
-		$('#dh_sidebar_strikeButton').click(function(){
-			addStrikeTag();
-		});
-		$('#dh_sidebar_spoilerButton').click(function(){
-			addSpoilerTag();
-		});
-		$('#dh_sidebar_quoteButton').click(function(){
-			addQuoteTag();
-		});
-		$('#dh_sidebar_listButton').click(function(){
-			addListTag();
-		});
-		$('#dh_sidebar_oListButton').click(function(){
-			addOrderedListTag();
-		});
-		$('#dh_sidebar_codeButton').click(function(){
-			addCodeTag();
-		});
-		$('#dh_sidebar_noParseButton').click(function(){
-			addNoParseTag();
-		});
-		$('#dh_sidebar_sarcasmButton').click(function(){
-			addSarcasmTag();
-		});
-		$('#dh_sidebar_offTopicButton').click(function(){
-			addOffTopicTag();
-		});
+		addReplyArea();
+		addSidebar();
+	}
+	else if(newGuideSpan.length > 0){
+		addReplyArea();
 	}
 });
+
+function addReplyArea(){
+	appendToReplyArea();
+	
+	$('#dh_urlButton').click(function(){
+		addUrlTag();
+	});
+	$('#dh_boldButton').click(function(){
+		addBoldTag();
+	});
+	$('#dh_italicButton').click(function(){
+		addItalicTag();
+	});
+	$('#dh_underlineButton').click(function(){
+		addUnderlineTag();
+	});
+	$('#dh_headerButton').click(function(){
+		addHeaderTag();
+	});
+	$('#dh_strikeButton').click(function(){
+		addStrikeTag();
+	});
+	$('#dh_spoilerButton').click(function(){
+		addSpoilerTag();
+	});
+	$('#dh_quoteButton').click(function(){
+		addQuoteTag();
+	});
+	$('#dh_listButton').click(function(){
+		addListTag();
+	});
+	$('#dh_oListButton').click(function(){
+		addOrderedListTag();
+	});
+	$('#dh_codeButton').click(function(){
+		addCodeTag();
+	});
+	$('#dh_noParseButton').click(function(){
+		addNoParseTag();
+	});
+	$('#dh_sarcasmButton').click(function(){
+		addSarcasmTag();
+	});
+	$('#dh_offTopicButton').click(function(){
+		addOffTopicTag();
+	});
+}
+
+function addSidebar(){
+	appendToSidebar();
+
+	var sidebarTop = $('#dhSidebarButtons').position().top;
+	
+	$(window).scroll(function(){
+		var windowTop = $(window).scrollTop();
+		
+		//if top of sidebar is in view
+		if (windowTop > sidebarTop)
+		{
+			//always in view
+			$('#dhSidebarButtons').css({ "position":"fixed", "top":"10px" });
+		}
+		else
+		{
+			//reset back to normal viewing
+			$('#dhSidebarButtons').css({ "position":"inherit" });
+		}
+	});
+	
+	$('#dh_sidebar_urlButton').click(function(){
+		addUrlTag();
+	});
+	$('#dh_sidebar_boldButton').click(function(){
+		addBoldTag();
+	});
+	$('#dh_sidebar_italicButton').click(function(){
+		addItalicTag();
+	});
+	$('#dh_sidebar_underlineButton').click(function(){
+		addUnderlineTag();
+	});
+	$('#dh_sidebar_headerButton').click(function(){
+		addHeaderTag();
+	});
+	$('#dh_sidebar_strikeButton').click(function(){
+		addStrikeTag();
+	});
+	$('#dh_sidebar_spoilerButton').click(function(){
+		addSpoilerTag();
+	});
+	$('#dh_sidebar_quoteButton').click(function(){
+		addQuoteTag();
+	});
+	$('#dh_sidebar_listButton').click(function(){
+		addListTag();
+	});
+	$('#dh_sidebar_oListButton').click(function(){
+		addOrderedListTag();
+	});
+	$('#dh_sidebar_codeButton').click(function(){
+		addCodeTag();
+	});
+	$('#dh_sidebar_noParseButton').click(function(){
+		addNoParseTag();
+	});
+	$('#dh_sidebar_sarcasmButton').click(function(){
+		addSarcasmTag();
+	});
+	$('#dh_sidebar_offTopicButton').click(function(){
+		addOffTopicTag();
+	});
+}
 
 function removeExistingButtons(){
 	//Remove any that were already appended, otherwise it will have multiples.

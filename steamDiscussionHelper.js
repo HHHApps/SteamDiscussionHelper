@@ -5,6 +5,7 @@ var groupDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/groups
 var regularDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/discussions/;
 var tradingDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/app\/[0-9]+\/tradingforum\//;
 var workshopDiscussionRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/workshop\/discussions\/?/;
+var newGuideRegex = /^https?:\/\/(?:[^\.]+\.)?steamcommunity\.com\/sharedfiles\/editguide\/\?appid=[0-9]+/;
 
 /* Inject jQuery into the page just to make sure we have it,
 	then inject the updatePage script. */
@@ -25,7 +26,8 @@ function queryTabs(){
 				groupDiscussionRegex.test(tab.url) || 
 				regularDiscussionRegex.test(tab.url) || 
 				tradingDiscussionRegex.test(tab.url) || 
-				workshopDiscussionRegex.test(tab.url)) {
+				workshopDiscussionRegex.test(tab.url) || 
+				newGuideRegex.test(tab.url)) {
 					updatePage(tab.id);
 			}
 		});
