@@ -1,12 +1,5 @@
 /* This content script helps make sure it auto-runs every time you go to the steam community domain. */
 
-String.prototype.replaceAt = function(index, characters, tag) {
-	var start = this.substr(0, index);
-	var end = this.substr(index + characters.length);
-	var replacement = start + surroundWithTag(tag, characters) + end;
-    return replacement;
-}
-
 function getTextArea(){
 	//I want to give the textarea an id for quicker access later
 	var textArea;
@@ -276,18 +269,17 @@ function addOffTopicTag(){
 }
 
 function addTag(tag){
-	var selectedTextObj = getSelectedText();
-	var hasSelectedText = selectedTextObj.selectedText != undefined && selectedTextObj.selectedText != "";
-	var fromTextArea = selectedTextObj.fromTextArea;
+	var textArea = document.getElementById('dhTextArea');
+	var selectedTextObject = {
+			textAreaValue: textArea.value,
+			selectionStart: textArea.selectionStart,
+			selectionEnd: textArea.selectionEnd
+		};
 	
-	if(hasSelectedText){
-		if(fromTextArea){
-			replaceText(tag, selectedTextObj.selectedText);
-		} else{
-			appendText(tag, selectedTextObj.selectedText);
-		}
-	} else{
-		appendText(tag, selectedTextObj.selectedText);
+	if (textArea.selectionStart != textArea.selectionEnd){
+		replaceText(tag, selectedTextObject);
+	} else {
+		appendText(tag, selectedTextObject);
 	}
 }
 
@@ -308,40 +300,35 @@ function setText(newText){
 	keycodes.replyBox.val(newText);
 }
 
-function appendText(tag, selectedText){
+function appendText(tag, selectedTextObject){
 	var replyBoxVal = keycodes.replyBox.val() || "";
-	var newText = surroundWithTag(tag, selectedText);
-	
-	var replacementText = replyBoxVal.concat(newText);
-	setText(replacementText);
-}
 
-function replaceText(tag, selectedText){
-	var replyBoxVal = keycodes.replyBox.val() || "";
-	var lastIndexOfSelected = replyBoxVal.lastIndexOf(selectedText);
-	var newText = replyBoxVal.replaceAt(lastIndexOfSelected, selectedText, tag);
+	if(selectedTextObject != undefined && selectedTextObject.selectionEnd < replyBoxVal.length){
+		/* Append to the index */
+		var start = selectedTextObject.textAreaValue.substr(0, selectedTextObject.selectionStart);
+		var selection = selectedTextObject.textAreaValue.substring(selectedTextObject.selectionStart, selectedTextObject.selectionEnd);
+		var end = selectedTextObject.textAreaValue.substr(selectedTextObject.selectionEnd, selectedTextObject.textAreaValue.length);
 	
-	setText(newText);
-}
-
-function getSelectedText(){
-	var selectedTextObj = {
-		selectedText: "",
-		fromTextArea: false
-	};
-	
-	var textArea = document.getElementById('dhTextArea');
-
-	if (textArea.selectionStart != undefined && textArea.selectionEnd != undefined && textArea.selectionStart != textArea.selectionEnd)
-	{
-		var startPos = textArea.selectionStart;
-		var endPos = textArea.selectionEnd;
-		selectedTextObj.selectedText = textArea.value.substring(startPos, endPos);
-		selectedTextObj.fromTextArea = true;
+		var replacement = start + surroundWithTag(tag, selection) + end;
+		setText(replacement);
+	} else {
+		/* Append to the end */		
+		var selectedText = "";
+		if(window.getSelection().toString().length > 0){
+			selectedText = window.getSelection().toString();
+		}
+		var newText = surroundWithTag(tag, selectedText);
+		
+		var replacementText = replyBoxVal.concat(newText);
+		setText(replacementText);
 	}
-    else if(window.getSelection().toString().length > 0){
-        selectedTextObj.selectedText = window.getSelection().toString();
-    }
+}
+
+function replaceText(tag, selectedTextObject){
+	var start = selectedTextObject.textAreaValue.substr(0, selectedTextObject.selectionStart);
+	var selection = selectedTextObject.textAreaValue.substring(selectedTextObject.selectionStart, selectedTextObject.selectionEnd);
+	var end = selectedTextObject.textAreaValue.substr(selectedTextObject.selectionEnd, selectedTextObject.textAreaValue.length);
 	
-    return selectedTextObj;
+	var replacement = start + surroundWithTag(tag, selection) + end;
+	setText(replacement);
 }
