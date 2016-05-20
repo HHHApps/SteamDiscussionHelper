@@ -286,10 +286,15 @@ function addTag(tag){
 function surroundWithTag(tag, selectedText){
 	selectedText = selectedText != null ? selectedText : "";
 	var surroundedByTag = "";
+	var quotedAuthor = getQuotedAuthor();
 	if(tag == "list"){
 		surroundedByTag = "[list]\n[*]\n[*]\n[*]\n[/list]";
 	} else if(tag == "olist"){
 		surroundedByTag = "[olist]\n[*]\n[*]\n[*]\n[/olist]";
+	} else if(tag == "quote" && quotedAuthor != ""){
+		surroundedByTag = "[quote=" + quotedAuthor + "]" + selectedText + "[/quote]";
+	} else if(quotedAuthor != ""){
+		surroundedByTag = "[quote=" + quotedAuthor + "][" + tag + "]" + selectedText + "[/" + tag + "][/quote]";
 	} else {
 		surroundedByTag = "[" + tag + "]" + selectedText + "[/" + tag + "]";
 	}
@@ -307,6 +312,9 @@ function appendText(tag, selectedTextObject){
 		/* Append to the index */
 		var start = selectedTextObject.textAreaValue.substr(0, selectedTextObject.selectionStart);
 		var selection = selectedTextObject.textAreaValue.substring(selectedTextObject.selectionStart, selectedTextObject.selectionEnd);
+		if(window.getSelection().toString().length > 0){
+			selection = window.getSelection().toString();
+		}
 		var end = selectedTextObject.textAreaValue.substr(selectedTextObject.selectionEnd, selectedTextObject.textAreaValue.length);
 	
 		var replacement = start + surroundWithTag(tag, selection) + end;
@@ -331,4 +339,39 @@ function replaceText(tag, selectedTextObject){
 	
 	var replacement = start + surroundWithTag(tag, selection) + end;
 	setText(replacement);
+}
+
+function getQuotedAuthor(){
+	var quotedAuthor = "";
+	if(window.getSelection().toString().length > 0){
+		var previousElementSibling = window.getSelection().baseNode.parentNode.previousElementSibling;
+		if(previousElementSibling){
+			var commentAuthorElement = previousElementSibling.getElementsByClassName("commentthread_author_link")[0];
+			var opAuthorElement = previousElementSibling.getElementsByClassName("forum_op_author")[0];
+			
+			if(!commentAuthorElement && !opAuthorElement){
+				if(previousElementSibling.previousElementSibling){
+					opAuthorElement = previousElementSibling.previousElementSibling.getElementsByClassName("forum_op_author")[0];
+				}
+			}
+			
+			if(commentAuthorElement || opAuthorElement){
+				var author = commentAuthorElement ? commentAuthorElement.innerText : opAuthorElement.innerText;
+				var postParentId = window.getSelection().baseNode.parentElement.id;
+				var postId = "";
+				if(postParentId){
+					var stringToRemoveFromId = "comment_content_";
+					postId = postParentId.substring(stringToRemoveFromId.length);
+				}
+
+				var nicknameElement = previousElementSibling.getElementsByClassName("nickname_block")[0];
+				if(nicknameElement){
+					var nickname = nicknameElement.innerText;
+					author = author.substr(0, (author.length - nickname.length) - 1);
+				}
+				quotedAuthor = postId != "" ? (author + ";" + postId) : author;
+			}
+		}
+	}
+	return quotedAuthor;
 }
