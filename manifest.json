@@ -2,10 +2,10 @@
   "manifest_version": 2,
 
   "name": "Steam Discussion Helper",
-  "description": "Adds new functionality to assist in posting in Steam Discussions.",
-  "version": "1.5",
+  "description": "Adds new functionality to assist in posting in the Steam Community.",
+  "version": "1.6",
   "background":{
-	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "steamDiscussionHelper.js"]
+	"scripts": ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js"]
   },
   "icons": {
 	"16": "images/icon16.png",
@@ -13,8 +13,45 @@
 	"128": "images/icon128.png"
   },
   "content_scripts": [{
-  	"matches": ["*://*.steamcommunity.com/*"],
-  	"js":      ["loadSteamDiscussionHelper.js"]
+  	"matches": ["*://*.steamcommunity.com/discussions/*",
+				"*://*.steamcommunity.com/app/*/discussions/*",
+				"*://*.steamcommunity.com/groups/*/discussions*",
+				"*://*.steamcommunity.com/workshop/discussions/*",
+				"*://*.steamcommunity.com/app/*/tradingforum/*",
+				"*://*.steamcommunity.com/sharedfiles/editguide/*",
+				"*://*.steamcommunity.com/sharedfiles/filedetails/discussions/*"],
+	"css":	   ["/styles/steamDiscussionHelper.css"],
+  	"js":      ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "updateDiscussionsPage.js"]
+  }, {
+  	"matches": ["*://*.store.steampowered.com/recommended/recommendgame/*"],
+	"css":	   ["/styles/steamDiscussionHelper.css"],
+  	"js":      ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "updateReviewPage.js"]
+  }, {
+  	"matches": ["*://*.steamcommunity.com/sharedfiles/filedetails/*", 
+				"*://*.steamcommunity.com/games/*/announcements/detail/*",
+				"*://*.steamcommunity.com/groups/*"],
+	"exclude_globs": ["*/discussions*"],
+	"css":	   ["/styles/steamDiscussionHelper.css"],
+  	"js":      ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "updateCommentSections.js"]
+  }, {
+  	"matches": ["*://*.steamcommunity.com/id/*", 
+				"*://*.steamcommunity.com/profiles/*"],
+	"exclude_globs": ["*/*/home*", 
+					  "*/*/games*", 
+					  "*/*/wishlist*", 
+					  "*/*/followedgames*", 
+					  "*/*/reviews*", 
+					  "*/*/inventory*", 
+					  "*/*/groups*", 
+					  "*/*/friends*", 
+					  "*/*/tradeoffers*", 
+					  "*/*/screenshots*", 
+					  "*/*/images*", 
+					  "*/*/videos*", 
+					  "*/*/myworkshopfiles*", 
+					  "*/*/commenthistory*"],
+	"css":	   ["/styles/steamDiscussionHelper.css"],
+  	"js":      ["/lib/jquery-1.11.3.min.js", "/lib/underscore-min.js", "updateCommentSections.js"]
   }],
   "permissions": [
     "<all_urls>",

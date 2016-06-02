@@ -6,7 +6,7 @@ function getTextArea(){
 	
 	if($('.forumtopic_reply_entry').length > 0){
 		/* new reply */
-		var textArea = $('.forumtopic_reply_entry')[0].children[0].children[0];
+		textArea = $('.forumtopic_reply_entry')[0].children[0].children[0];
 		textArea.id = "dhTextArea";
 	} else if($('textarea[class="forumtopic_reply_textarea"]:first-child').length > 0){
 		/* new post */
@@ -20,7 +20,11 @@ function getTextArea(){
 }
 
 function getSidebar(){
-	return $('.rightcol');
+	if($('.rightcol').length > 0){
+		return $('.rightcol');
+	} else {
+		return $('.sidebar');
+	}
 }
 
 function getReplyArea(){
