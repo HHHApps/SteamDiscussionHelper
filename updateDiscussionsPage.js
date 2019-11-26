@@ -46,8 +46,9 @@ $( document ).ready(function() {
 	var newDiscussionButton = $('body').find('span:contains("Start a New Discussion")');
 	
 	var newGuideSpan = $('body').find('span:contains("Creating a new guide")');
+	var replyTextArea = $('textarea#dhTextArea');
 	
-	if(newDiscussionButton.length > 0){
+	if(newDiscussionButton.length > 0 || replyTextArea.length > 0){
 		addReplyArea();
 		addSidebar();
 	}

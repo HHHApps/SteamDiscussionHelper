@@ -2,6 +2,7 @@ function getTextArea(){
 	/* I want to give the textarea an id for quicker access later */
 	var textArea;
 	if ($('textarea[id="game_recommendation"]').length > 0){
+		console.log("here");
 		textArea = $('textarea[id="game_recommendation"]').attr('id', 'dhTextArea');
 		var childGuest = document.createElement("div");
 		childGuest.id = "dhReplyArea";
