@@ -1,14 +1,22 @@
 function getTextArea(){
 	/* I want to give the textarea an id for quicker access later */
 	var textArea;
-	if ($('textarea[class="commentthread_textarea"]').length > 0){
+	if($('textarea[id="blotter_statuspost_textarea"]').length > 0){
+		textArea = $('textarea[id="blotter_statuspost_textarea"]');
+		
+		var childGuest = document.createElement("div");
+		childGuest.id = "dhReplyArea";
+		textArea[0].parentNode.parentNode.insertBefore(childGuest, textArea[0].parentNode.nextSibling);
+	}
+	else if ($('textarea[class="commentthread_textarea"]').length > 0){
 		textArea = $('textarea[class="commentthread_textarea"]');
+		
 		var childGuest = document.createElement("div");
 		childGuest.id = "dhReplyArea";
 		textArea[0].parentNode.parentNode.insertBefore(childGuest, textArea[0].parentNode.nextSibling);
 	}
 	
-	return $('textarea[class="commentthread_textarea"]');
+	return textArea;
 }
 
 function getReplyArea(){
